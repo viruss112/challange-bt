@@ -1,0 +1,64 @@
+This application enrolls new clients into the bank system.
+
+It connects to 2 different APIs and gets the clients that are already registered in the bank system
+    1. MockLab.io => here are the clients that are already registered in the bank DB.
+    2. Mockable.io => here are the client reputations
+
+Assume that all the clients that are registered into the bank DB or WILL BE REGISTERED into the bank DB have a reputation defined.
+
+The application registers a new client into the system
+
+    1. verify if the client is already registered into the system.
+    2. verify if the client's id card is valid
+    3. verify client's reputation
+
+  and returns the status if the client is eligible or not for registration and generates the pdf document.
+
+ The pdf document will be saved into the root folder, the "Reports" package and after it is signed it is stored into the DB
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+----TO RUN THE APPLICATION the developer will need to create a new schema into mysql, in the application.properties file
+ edit the dbc:mysql://localhost:3306/"your_schema_name", enter the password and username to your mysql instance---
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+----THE CLIENTS API (mocklab.io) provide a GET METHOD  that returns with 200 status the value:
+
+ {
+
+   "id":"1",
+   "address":"B-dul Eroilor nr 15",
+   "firstName":"Dan",
+   "lastName":"Pop",
+   "number":"000000",
+   "personalIdentityCode":"1234567890987",
+   "placeOfBirth":"Cluj Napoca",
+   "series":"CJ",
+   "validity":"10.02.1996 - 10.02.2022"
+
+ }
+
+for checking if the user already exists test case.
+
+----THE REPUTATIONS API (mockable.io) provides 2 GET METHODS that returns with 200 status the values from reputations for 2 clients:
+
+for client with id: 1234567890987 (existed client)
+{
+ "reputation":"20"
+}
+
+for client with id:4321567890987 (new client)
+
+ {
+    "reputation": "80"
+ }
+
+---------------------------------------------------------------------------------------------------------------------------
+
+TO TEST THE APPLICATION go to endpoint localhost:8080/swagger-ui.html
+
+call the method from register controller with the body.
+
